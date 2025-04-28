@@ -6,8 +6,8 @@
       "output": "./output",
       "mode": "full",
       "options": {
+        "debug": true,
         "external": false,
-        "debug": false,
         "ipfsAbiGetter": false,
         "interfacesGetter": false,
         "experimental": {
@@ -22,7 +22,7 @@
       "mode": "full",
       "options": {
         "external": false,
-        "debug": false,
+        "debug": true,
         "ipfsAbiGetter": false,
         "interfacesGetter": false,
         "experimental": {
@@ -52,7 +52,7 @@
       "mode": "full",
       "options": {
         "external": false,
-        "debug": false,
+        "debug": true,
         "ipfsAbiGetter": false,
         "interfacesGetter": false,
         "experimental": {

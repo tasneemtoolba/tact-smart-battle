@@ -1,9 +1,9 @@
-//
-// Public solution template
-//
-
 message Vote {
     value: Bool;
+}
+
+fun addressToU32(addr: Address): Int {
+    return addr.asSlice().hash() % 4294967296;
 }
 
 struct ProposalState {
@@ -17,17 +17,32 @@ struct Init {
 }
 
 contract Proposal {
+    _proposalState: ProposalState;
+    _votingEndingAt: Int as uint32;
+    _voter: map<Int as uint32, Bool>;
+
     init(data: Init) {
+        self._proposalState = ProposalState { yesCount: 0, noCount: 0 };
+        self._votingEndingAt = data.votingEndingAt;
     }
 
     // deploy
-    receive() { }
+    receive() {}
 
     receive(msg: Vote) {
-        // TODO: implement
+        let senderr = addressToU32(sender());
+        if (self._votingEndingAt < now() || self._voter.get(senderr) == true) {
+            throw(257);
+        }
+        if (msg.value == true) {
+            self._proposalState.yesCount += 1;
+        } else {
+            self._proposalState.noCount += 1;
+        }
+        self._voter.set(senderr, true);
     }
 
     get fun proposalState(): ProposalState {
-        // TODO: implement
+        return self._proposalState;
     }
 }
